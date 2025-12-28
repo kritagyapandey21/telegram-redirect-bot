@@ -19,36 +19,55 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 TARGET_BOT_USERNAME = os.getenv("TARGET_BOT_USERNAME")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle the /start command and redirect to target bot."""
+    """Handle the /start command with informative content before redirect."""
     user = update.effective_user
     
-    # Create inline keyboard with prominent redirect button
+    # Create inline keyboard with redirect button
     keyboard = [
-        [InlineKeyboardButton("✅ Continue →", url=f"https://t.me/{TARGET_BOT_USERNAME}")]
+        [InlineKeyboardButton("Start Your AI Session", url=f"https://t.me/{TARGET_BOT_USERNAME}")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # Send redirect message
+    # Send informative welcome message
+    welcome_message = (
+        "Welcome to Tanix AI\n\n"
+        "Tanix AI is your 24/7 intelligent assistant powered by advanced artificial intelligence.\n\n"
+        "Our Features:\n"
+        "- Natural language conversations\n"
+        "- Instant responses to your questions\n"
+        "- Available around the clock\n"
+        "- Personalized assistance\n"
+        "- Multi-topic expertise\n\n"
+        "Ready to experience intelligent conversations?\n"
+        "Click the button below to start your session."
+    )
+    
     await update.message.reply_text(
-        "🔄 Redirecting...",
+        welcome_message,
         reply_markup=reply_markup
     )
     
-    logger.info(f"User {user.id} ({user.username}) was redirected to {TARGET_BOT_USERNAME}")
+    logger.info(f"User {user.id} ({user.username}) was shown info and redirect to {TARGET_BOT_USERNAME}")
 
 async def handle_any_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle any message and redirect to target bot."""
+    """Handle any message with helpful redirect to active bot."""
     user = update.effective_user
     
-    # Create inline keyboard with prominent redirect button
+    # Create inline keyboard with redirect button
     keyboard = [
-        [InlineKeyboardButton("✅ Continue →", url=f"https://t.me/{TARGET_BOT_USERNAME}")]
+        [InlineKeyboardButton("Start Your AI Session", url=f"https://t.me/{TARGET_BOT_USERNAME}")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    # Send redirect message
+    # Send helpful message
+    response_message = (
+        "Thank you for your message.\n\n"
+        "To start using Tanix AI and get responses to your questions, "
+        "please click the button below to begin your session with our main AI assistant."
+    )
+    
     await update.message.reply_text(
-        "🔄 Redirecting...",
+        response_message,
         reply_markup=reply_markup
     )
     
@@ -74,3 +93,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+    
